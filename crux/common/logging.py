@@ -7,12 +7,14 @@ from termcolor import colored
 # logger class
 class Logger:
     logging = False
+    filt = None
 
-    def __init__(self, logging=False):
+    def __init__(self, logging=False, filt=None):
         self.logging = logging
+        self.filt = filt
 
     def log(self, text, level='debug'):
-        if not self.logging:
+        if not self.logging or self.__filtered(level):
             return
         level = level.lower()
 
@@ -37,4 +39,11 @@ class Logger:
         self.log(text, level='warn')
     def debug(self, debug):
         self.log(text, level='debug')
+
+    def __filtered(self, level):
+        levels = ['debug', 'info', 'warn', 'error']
+        if self.filt == None or not level in levels:
+            return False
+        return levels.index(self.filt) >= levels.index(level)
+
 
