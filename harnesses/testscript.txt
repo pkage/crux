@@ -1,0 +1,13 @@
+connect tcp://127.0.0.1:30020
+echo getting configuration
+cset name "get_config"
+cshow
+send
+lshow
+
+echo testing execution
+creset
+cset name "execute"
+cset payload {"parameters": {}, "inputs": {}}
+send
+lshow
