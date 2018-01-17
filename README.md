@@ -3,7 +3,7 @@
 ## Information
 
 __Author:__ Patrick Kage  
-__Version:__ 0.0.2
+__Version:__ 0.0.2  
 __Date:__ 2018-01-16
 
 ## Purpose
