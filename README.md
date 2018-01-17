@@ -3,7 +3,7 @@
 ## Information
 
 __Author:__ Patrick Kage  
-__Version:__ 0.0.2  
+__Version:__ 0.0.3  
 __Date:__ 2018-01-16
 
 ## Purpose
@@ -56,9 +56,9 @@ Should be named `crux.json` and placed in the root of your project directory. Th
 	"author": "Patrick Kage",
 	"description": "an example data-using pipeline component",
 	"startup": "sh crux/up.sh",
-	"input": "crux/input.json",
+	"inputs": "crux/input.json",
 	"parameters": "crux/config.json",
-	"output": "crux/output.json"
+	"outputs": "crux/output.json"
 }
 ```
 
