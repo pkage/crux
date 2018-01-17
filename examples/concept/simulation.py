@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
             # output that data back to the backend
             cc.output(output)
-        except SimulationException ex:
+        except SimulationException as ex:
             # handle an error state gracefully
             cc.fail(ex.message)
         except:
