@@ -46,9 +46,9 @@ class CruxClient:
         with open(description, 'r') as cfile:
             self.cruxfile = json.load(cfile)
 
-            with open(self.cruxfile['inputs'], 'r') as ifile:
+            with open(self.cruxfile['input'], 'r') as ifile:
                 self.inputs = json.load(ifile)
-            with open(self.cruxfile['outputs'], 'r') as ofile:
+            with open(self.cruxfile['output'], 'r') as ofile:
                 self.outputs = json.load(ofile)
             with open(self.cruxfile['parameters'], 'r') as pfile:
                 self.parameters = json.load(pfile)
