@@ -8,5 +8,5 @@ def pack_object(obj):
     return msgpack.packb(obj)
 
 def unpack_object(binary):
-    return msgpack.unpackb(obj)
+    return msgpack.unpackb(binary, encoding='utf-8')
 

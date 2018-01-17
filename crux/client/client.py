@@ -89,7 +89,7 @@ class CruxClient:
     def wait(self):
         """Waits for a client to ask something
 
-        :returns: a triple (done status, run config, run inputs)
+        :returns: a triple (run inputs, run config, done status)
         """
 
         while True:
@@ -98,15 +98,21 @@ class CruxClient:
             self.__log('waiting for command...')
             msg = Message(data=self.__socket.recv())
             reply = Message(name='ack')
-            self.__log('received {} from somewhere...'.format(msg.name))
+            self.__log('received {}...'.format(msg.name))
 
             # route our reply
             if msg.name == 'execute':
-                # this is an execution, pass control back to the main loop (but needing closure)
-                self.__log('passing execution back...')
-                self.__dirty_socket = True
-                return (False, msg.payload['config'], msg.payload('config'))
-            elif msg.name == 'get_config':
+                # first check if the request is valid
+                if msg.payload is not None and 'parameters' in msg.payload and 'inputs' in msg.payload:
+                    # this is an execution, pass control back to the main loop (but needing closure)
+                    self.__log('passing execution back...')
+                    self.__dirty_socket = True
+                    return (msg.payload['inputs'], msg.payload['parameters'], False)
+                else:
+                    reply.name ='malformed'
+                    reply.success = False
+                    self.__log.error('received malformed execution request')
+            elif msg.name == 'get_cruxfile':
                 reply.payload = self.cruxfile
             elif msg.name == 'shutdown':
                 break
@@ -123,7 +129,7 @@ class CruxClient:
         self.__log('shutting down loop...')
         self.__socket.send(reply.pack())
         self.__dirty_socket = False
-        return (True, None, None)
+        return (None, None, True)
 
     def output(self, output):
         """Returns data to the client
