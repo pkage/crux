@@ -1,6 +1,6 @@
 connect tcp://127.0.0.1:30020
 echo getting configuration
-cset name "get_config"
+cset name "get_cruxfile"
 cshow
 send
 lshow
@@ -11,3 +11,4 @@ cset name "execute"
 cset payload {"parameters": {}, "inputs": {}}
 send
 lshow
+assert payload.baz.0 1

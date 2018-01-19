@@ -146,6 +146,40 @@ class CruxShell(cmd.Cmd):
             self.last_msg = Message(data=self.__socket.recv())
             self.__log('sending...')
 
+    def do_assert(self, args):
+        try:
+            field, data = args.split(' ', 1)
+            data = json.loads(data)
+        except:
+            self.__log.error('error parsing arguments')
+            return
+
+        # resolve the path
+        def resolve_path(obj, fieldpath):
+            if type(obj) is list:
+                fieldpath[0] = int(fieldpath[0])
+            if len(fieldpath) == 0:
+                return obj
+            if len(fieldpath) == 1:
+                return obj[fieldpath[0]]
+            else:
+                return resolve_path(obj[fieldpath[0]], fieldpath[1:])
+
+        try:
+            field = field.split('.')
+            compare = resolve_path(getattr(self.last_msg, field[0]), field[1:])
+        except:
+            self.__log.warn('assertion warning: field path expansion failed for {}'.format(field))
+            compare = None
+
+        if compare == data:
+            self.__log.info('assertion passed: {}'.format(data))
+        else:
+            self.__log.error('assertion failed!: {} != {}'.format(
+                json.dumps(data),
+                json.dumps(compare)
+            ))
+
 if __name__ == '__main__':
     sh = CruxShell()
     if len(sys.argv) == 2:
