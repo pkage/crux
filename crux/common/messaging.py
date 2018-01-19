@@ -6,14 +6,14 @@ import msgpack
 from . import packing
 
 class MessageException(Exception):
-    '''Something went wrong with handling a message'''
+    """Something went wrong with handling a message"""
     def __init__(self, msg=None):
         if msg is None:
             msg = 'Error handling message!'
         super().__init__(msg)
 
 class Message:
-    '''Message class to facilitate messaging between all crux components'''
+    """Message class to facilitate messaging between all crux components"""
     name = None
     payload = None
     success = None
@@ -29,6 +29,10 @@ class Message:
             self.unpack(data)
 
     def unpack(self, data):
+        """Unpack some data into this object
+
+        :param data: some msgpack-able data
+        """
         try:
             data = packing.unpack_object(data)
         except ValueError:
@@ -39,6 +43,10 @@ class Message:
         self.success = data['success'] if 'success' in data else True
 
     def pack(self):
+        """Pack this object
+
+        :returns: a binary string containing this message
+        """
         if self.name is None:
             # enforce message naming
             raise MessageException('Message must have a name!')
