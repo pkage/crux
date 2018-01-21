@@ -10,6 +10,8 @@ setup(name='crux',
       packages=['crux', 'crux.client', 'crux.backend', 'crux.common', 'crux.pipeline'],
       install_requires=['pyzmq', 'msgpack-python', 'jsonschema', 'termcolor'],
       entry_points={
-          'console_scripts': []
+          'console_scripts': [
+            'crux_daemon=crux.backend.launch:main'
+          ]
       }
      )
