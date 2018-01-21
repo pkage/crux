@@ -2,6 +2,7 @@
 # Crux inter-agent messaging
 # @author Patrick Kage
 
+import json
 import msgpack
 from . import packing
 
@@ -58,3 +59,10 @@ class Message:
             out['success'] = self.success
 
         return packing.pack_object(out)
+
+    def __repr__(self):
+        return '<Message name="{}", payload={}, success={}>'.format(
+            self.name,
+            json.dumps(self.payload) if self.payload is not None else self.payload,
+            self.success
+        )
