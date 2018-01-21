@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
             # do some operation to the data
             # output = sim.do_some_simulation(data)
-            output = 'foo'
+            output = {'foo': 'bar', 'baz': [1,2,3]}
 
             # output that data back to the backend
             cc.output(output)
