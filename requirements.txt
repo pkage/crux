@@ -1,5 +1,6 @@
 pyzmq
 msgpack-python
 jsonschema
+semver
 
 termcolor
