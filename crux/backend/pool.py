@@ -1,5 +1,5 @@
 ##
-# crux component pool
+# crux component process pool
 # @author Patrick Kage
 
 import os
@@ -20,8 +20,8 @@ class ComponentLoadError(Exception):
             msg = 'Error handling message!'
         super().__init__(msg)
 
-class ComponentPool:
-    """Load and run a pool of components locally"""
+class ProcessPool:
+    """Load and run a pool of components as local processes"""
 
     # simple (possibly sub-optimal?) way of holding onto processes
     pool    = {}
@@ -71,8 +71,8 @@ class ComponentPool:
             # this is gross, but should work? there isn't a great way of trying to find a free port
             return 'tcp://*:{}'.format(random.randrange(50000, 65535))
 
-    def launch(self, path, context):
-        """Launch a component, and return a pipeline.Component handle
+    def launch(self, path):
+        """Launch a component, and return a address to connect to the component at
 
         :param path: path to load (containing cruxfile)
         :param context: the zeromq context to pass to the Component
@@ -103,18 +103,21 @@ class ComponentPool:
         modified_env = os.environ.copy()
         modified_env['CRUX_BIND'] = bind_addr
 
+        # change the bind addr into an address to connect to
+        connect_addr = self.__convert_bind(bind_addr)
+
         # create the launch command
         launch = shlex.split(cruxfile['startup'])
 
         # launch
-        self.pool[self.__convert_bind(bind_addr)] = subprocess.Popen(
+        self.pool[connect_addr] = subprocess.Popen(
             launch,
             env=modified_env,
             cwd=path
         )
 
-        # wait for the component...
-        return Component(self.__convert_bind(bind_addr), context=context)
+        # this can be passed right into a component constructor
+        return connect_addr
 
     def join_all(self):
         """Wait for all managed processes to exit on their own"""
