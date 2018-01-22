@@ -43,7 +43,7 @@ class CruxShell(cmd.Cmd):
 
     def exit(self):
         if self.__addr is not None:
-            self.do_disconnect()
+            self.do_disconnect(None)
 
     def load(self, cmds):
         stripped = []
@@ -92,7 +92,7 @@ class CruxShell(cmd.Cmd):
         self.__log.info('connected to {}'.format(self.__addr))
         self.__set_prompt()
 
-    def do_disconnect(self):
+    def do_disconnect(self, args):
         if self.__addr is not None:
             self.__socket.disconnect(self.__addr)
             self.__log.info('disconnected from {}'.format(self.__addr))
