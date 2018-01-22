@@ -60,7 +60,7 @@ class ComponentPool:
             # assuming we're only handling local components
             return addr.replace('*', '127.0.0.1')
 
-    def create_bind(self):
+    def __create_bind(self):
         """create a bind address for a component
 
         :returns: a bindable zmq uri (as a string)
@@ -97,7 +97,7 @@ class ComponentPool:
             raise ComponentLoadError('no startup script specified')
 
         # create a bind address for the component
-        bind_addr = self.create_bind()
+        bind_addr = self.__create_bind()
 
         # copy the current process's environment variables and patch in a CRUX_BIND
         modified_env = os.environ.copy()
