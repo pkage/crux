@@ -50,6 +50,10 @@ class ComponentPool:
             self.ipc_dir = self.__get_temp_dir()
 
     def __convert_bind(self, addr):
+        """Convert a bind address to a connect-able address. IPC-aware
+
+        :param addr: address to convert
+        """
         if self.use_ipc:
             return addr
         else:
@@ -113,5 +117,19 @@ class ComponentPool:
         return Component(self.__convert_bind(bind_addr), context=context)
 
     def join_all(self):
+        """Wait for all managed processes to exit on their own"""
         for addr in self.pool:
             self.pool[addr].wait()
+
+    def kill_all(self):
+        """Send SIGKILL on all managed processes"""
+        for addr in self.pool:
+            self.pool[addr].kill()
+
+    def terminate_all(self):
+        """Send SIGTERM to all managed processes
+
+        On Windows, this has the same effect as ComponentPool.kill_all()
+        """
+        for addr in self.pool:
+            self.pool[addr].terminate()
