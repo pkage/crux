@@ -13,7 +13,7 @@ import subprocess
 from crux.pipeline.component import Component
 from crux.common.messaging import Message
 
-class ComponentLoadError(Exception):
+class ProcessLoadError(Exception):
     """Something went wrong with loading a component!"""
     def __init__(self, msg=None):
         if msg is None:
@@ -76,25 +76,25 @@ class ProcessPool:
 
         :param path: path to load (containing cruxfile)
         :param context: the zeromq context to pass to the Component
-        :raises ComponentLoadError: on failure to load a component
+        :raises ProcessLoadError: on failure to load a component
         :returns: a crux.pipeline.Component, bound, connected, and ready to go
         """
 
         # attempt to open the cruxfile
         cruxfile = os.path.join(path, 'crux.json')
         if not os.path.exists(cruxfile):
-            raise ComponentLoadError('no crux.json in "{}"!'.format(path))
+            raise ProcessLoadError('no crux.json in "{}"!'.format(path))
 
         # parse the cruxfile
         try:
             with open(cruxfile, 'r') as cf:
                 cruxfile = json.load(cf)
         except:
-            raise ComponentLoadError('unable to parse "{}"!'.format(os.path.join(path, 'cruxfile.json')))
+            raise ProcessLoadError('unable to parse "{}"!'.format(os.path.join(path, 'cruxfile.json')))
 
         # double check the cruxfile contains a startup command
         if not 'startup' in cruxfile:
-            raise ComponentLoadError('no startup script specified')
+            raise ProcessLoadError('no startup script specified')
 
         # create a bind address for the component
         bind_addr = self.__create_bind()
