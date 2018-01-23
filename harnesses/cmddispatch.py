@@ -26,7 +26,7 @@ class CruxShell(cmd.Cmd):
     def __init__(self):
         super().__init__()
 
-        self.__log = Logger(logging=True)
+        self.__log = Logger(logging=True, name='dispatch')
         # set up zmq stuff
         self.__context = zmq.Context()
         self.__socket = self.__context.socket(zmq.REQ)

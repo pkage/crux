@@ -49,7 +49,7 @@ class CruxClient:
         """
 
         # create the log object
-        self.__log = Logger(logging)
+        self.__log = Logger(logging, name='client')
 
         # load in all the pieces of the crux description
         self.__log('loading cruxfile {}...'.format(description))
@@ -65,6 +65,9 @@ class CruxClient:
             with open(self.cruxfile['parameters'], 'r') as pfile:
                 self.parameters = json.load(pfile)
                 self.cruxfile['parameters'] = self.parameters
+
+        # change the log name
+        self.__log.set_name(self.cruxfile['name'])
         self.__log('loaded cruxfile (and subfiles) successfully!')
 
         # if the bind address is none, assume we're being run by the crux command line client
