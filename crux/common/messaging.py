@@ -4,14 +4,11 @@
 
 import json
 import msgpack
-from . import packing
+from crux.common import packing
+from crux.common.exception import CruxException
 
-class MessageException(Exception):
-    """Something went wrong with handling a message"""
-    def __init__(self, msg=None):
-        if msg is None:
-            msg = 'Error handling message!'
-        super().__init__(msg)
+class MessageException(CruxException):
+    pass
 
 class Message:
     """Message class to facilitate messaging between all crux components"""

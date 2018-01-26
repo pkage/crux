@@ -10,15 +10,12 @@ import shlex
 import random
 import tempfile
 import subprocess
-from crux.pipeline.component import Component
 from crux.common.messaging import Message
+from crux.common.exception import CruxException
+from crux.pipeline.component import Component
 
-class ProcessLoadError(Exception):
-    """Something went wrong with loading a component!"""
-    def __init__(self, msg=None):
-        if msg is None:
-            msg = 'Error handling message!'
-        super().__init__(msg)
+class ProcessLoadError(CruxException):
+    pass
 
 class ProcessPool:
     """Load and run a pool of components as local processes"""

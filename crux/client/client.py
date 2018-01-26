@@ -6,22 +6,15 @@ import os
 import json
 import zmq
 import msgpack
+from crux.common.exception import CruxException
 from crux.common.messaging import Message, MessageException
 from crux.common.logging import Logger
 
-class InstantiationException(Exception):
+class InstantiationException(CruxException):
     """Something went wrong with instantiating the client"""
-    def __init__(self, msg=None):
-        if msg is None:
-            msg = 'Error instantiating crux client!'
-        super().__init__(msg)
 
-class NoResultError(Exception):
+class NoResultError(CruxException):
     """No result has been returned and the socket is in an illegal state"""
-    def __init__(self, msg=None):
-        if msg is None:
-            msg = 'No result has been returned!'
-        super().__init__(msg)
 
 class CruxClient:
     # zeromq stuff
