@@ -133,3 +133,21 @@ class ProcessPool:
         """
         for addr in self.pool:
             self.pool[addr].terminate()
+
+    def get_all_addrs(self):
+        """Get all addresses for all processes managed by this pool
+
+        :returns: a list of addresses
+        """
+        self.poll_all()
+        return [addr for addr in self.pool]
+
+    def poll_all(self):
+        """Poll all managed processes and remove stopped ones"""
+        deadprocs = []
+        for addr in self.pool:
+            if self.pool[addr].poll() is not None:
+                deadprocs.append(addr)
+
+        for addr in deadprocs:
+            del self.pool[addr]

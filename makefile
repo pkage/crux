@@ -1,7 +1,7 @@
 all: build run_concept
 
-run_daemon:
-	crux_daemon -b tcp://*:30020 -p tcp://*:30021 --logging --debug
+run_daemon: build
+	crux_daemon --logging --debug
 
 run_concept:
 	cd examples/client/ && CRUX_BIND="tcp://*:30020" python simulation.py

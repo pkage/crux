@@ -9,9 +9,9 @@ from . import daemon
 def main():
     ap = argparse.ArgumentParser(description='crux daemon launch agent')
 
-    ap.add_argument('-b', '--bind-addr', required=True,
+    ap.add_argument('-b', '--bind-addr', default='tcp://*:30020',
                     help='URI for the daemon to bind the API against')
-    ap.add_argument('-p', '--pub-addr', required=True,
+    ap.add_argument('-p', '--pub-addr', default='tcp://*:30021',
                     help='URI for the daemon to bind the notification server against')
 
     ap.add_argument('--debug', help='enable debug mode', action='store_true')
@@ -22,11 +22,10 @@ def main():
     # initialize the daemon
     cruxd = daemon.Daemon(
         logging=args.logging,
-        debug=args.debug
+        debug=args.debug,
+        bind_addr=args.bind_addr,
+        pub_addr=args.pub_addr
     )
 
     # launch the daemon
-    cruxd.listen(
-        args.bind_addr,
-        args.pub_addr
-    )
+    cruxd.listen()
