@@ -103,7 +103,7 @@ class CruxClient:
                     # this is an execution, pass control back to the main loop (but needing closure)
                     self.__log('passing execution back...')
                     self.__dirty_socket = True
-                    return (msg.payload['inputs'], msg.payload['parameters'], False)
+                    return (msg.payload['inputs'], self.__defaultify(msg.payload['parameters']), False)
                 else:
                     reply.name ='malformed'
                     reply.success = False
@@ -162,3 +162,20 @@ class CruxClient:
         self.__socket.send(reply.pack())
         self.__dirty_socket = False
         self.__log('returned error message')
+
+    def __defaultify(self, parameters):
+        """Fill in missing parameters with the defaults
+
+        :param parameters: Parameters recvd. from the requestor
+        :returns: filled in parameters
+        """
+
+        print(parameters)
+        for param in self.cruxfile['parameters']:
+            print (param)
+            if 'default' in self.cruxfile['parameters'][param] and (param not in parameters):
+                parameters[param] = self.cruxfile['parameters'][param]['default']
+        print(parameters)
+
+        return parameters
+
