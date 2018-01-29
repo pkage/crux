@@ -48,7 +48,7 @@ class Logger:
         self.log(text, level='error')
     def warn(self, text):
         self.log(text, level='warn')
-    def debug(self, debug):
+    def debug(self, text):
         self.log(text, level='debug')
 
     def __filtered(self, level):
