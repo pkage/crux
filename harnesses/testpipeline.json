@@ -1,0 +1,27 @@
+{
+	"components": {
+		"fileloader": {
+			"src": "examples/fileloader/",
+			"version": ">=0.0.1"
+		},
+		"filedumper": {
+			"src": "examples/filedumper/",
+			"version": ">=0.0.1"
+		}
+	},
+
+	"pipeline": [
+		{
+			"component": "fileloader",
+			"parameters": {
+				"path": "/tmp/notes.txt",
+				"export": "text"
+			},
+			"remap": {"text": "content"}
+		},
+		{
+			"component": "filedumper",
+			"parameters": {}
+		}
+	]
+}

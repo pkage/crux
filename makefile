@@ -9,5 +9,8 @@ run_concept:
 run_commander:
 	harnesses/cmddispatch.py harnesses/testscript.txt
 
+run_pipeline: 
+	harnesses/launchpipeline.py harnesses/testpipeline.json
+
 build:
 	pip install . --verbose --upgrade
