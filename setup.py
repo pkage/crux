@@ -8,7 +8,7 @@ setup(name='crux',
       author='Patrick Kage',
       author_email='pkage@mit.edu',
       packages=['crux', 'crux.client', 'crux.backend', 'crux.common', 'crux.pipeline'],
-      install_requires=['pyzmq', 'msgpack-python', 'jsonschema', 'termcolor'],
+      install_requires=['pyzmq', 'msgpack-python', 'jsonschema', 'termcolor', 'semver'],
       entry_points={
           'console_scripts': [
             'crux_daemon=crux.backend.launch:main'
