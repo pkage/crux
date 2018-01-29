@@ -1,0 +1,13 @@
+{
+	"path": {
+		"name": "Path of the file to load",
+		"type": "text",
+		"default": ""
+	},
+	"export": {
+		"name": "Export type",
+		"type": "dropdown",
+		"options": ["json", "csv", "text", "binary"],
+		"default": "text"
+	}
+}

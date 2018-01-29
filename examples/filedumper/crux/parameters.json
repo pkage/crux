@@ -1,0 +1,7 @@
+{
+	"path": {
+		"name": "Path of the file to load",
+		"type": "text",
+		"default": "/tmp/out.txt"
+	}
+}

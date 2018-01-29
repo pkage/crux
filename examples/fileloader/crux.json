@@ -1,8 +1,8 @@
 {
-	"name": "datamunger",
+	"name": "fileloader",
 	"version": "0.0.1",
 	"author": "Patrick Kage",
-	"description": "an example data-using pipeline component",
+	"description": "a simple file loader",
 	"startup": "sh crux/up.sh",
 	"inputs": "crux/input.json",
 	"parameters": "crux/parameters.json",

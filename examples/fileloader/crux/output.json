@@ -1,0 +1,15 @@
+{
+	"json": {
+		"type": "json",
+		"schema": {}
+	},
+	"csv": {
+		"type": "csv"
+	},
+	"text": {
+		"type": "text"
+	},
+	"bin": {
+		"type": "binary"
+	}
+}
