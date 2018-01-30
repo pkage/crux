@@ -41,6 +41,8 @@ if __name__ == "__main__":
 
             # output that data back to the backend
             cc.output(output)
+        except FileNotFoundError as fnfe:
+            cc.fail(repr(fnfe))
         except Exception as e:
             # hard failure
             cc.fail()
