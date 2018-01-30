@@ -12,7 +12,6 @@ from crux.client import CruxClient as Crux
 
 
 def dump_file(cfg, content):
-    print(cfg)
     with open(cfg['path'], 'w') as handle:
         data = handle.write(content)
 

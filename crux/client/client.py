@@ -91,7 +91,6 @@ class CruxClient:
         while True:
             if self.__dirty_socket:
                 raise NoResultError()
-            self.__log('waiting for command...')
             msg = Message(data=self.__socket.recv())
             reply = Message(name='ack')
             self.__log('received {}...'.format(msg.name))
@@ -170,12 +169,9 @@ class CruxClient:
         :returns: filled in parameters
         """
 
-        print(parameters)
         for param in self.cruxfile['parameters']:
-            print (param)
             if 'default' in self.cruxfile['parameters'][param] and (param not in parameters):
                 parameters[param] = self.cruxfile['parameters'][param]['default']
-        print(parameters)
 
         return parameters
 
