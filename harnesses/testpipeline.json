@@ -14,7 +14,7 @@
 		{
 			"component": "fileloader",
 			"parameters": {
-				"path": "/tmp/notes.txt",
+				"path": "/tmp/inp.txt",
 				"export": "text"
 			},
 			"remap": {"text": "content"}
