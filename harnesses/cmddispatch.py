@@ -74,15 +74,18 @@ class CruxShell(cmd.Cmd):
         ))
 
     def do_EOF(self, arg):
+        """End the program"""
         self.exit()
         print("")
         return True
 
     def do_exit(self, arg):
+        """End the program"""
         self.exit()
         return True
 
     def do_connect(self, addr):
+        """Connect to an address"""
         if self.__addr is not None:
             self.__log.warn('socket was connected to {}, disconnecting...'
                             .format(self.__addr))
@@ -93,6 +96,7 @@ class CruxShell(cmd.Cmd):
         self.__set_prompt()
 
     def do_disconnect(self, args):
+        """Disconnect"""
         if self.__addr is not None:
             self.__socket.disconnect(self.__addr)
             self.__log.info('disconnected from {}'.format(self.__addr))
@@ -102,7 +106,7 @@ class CruxShell(cmd.Cmd):
         self.__set_prompt()
 
     def do_cset(self, args):
-
+        """set the (payload/name/success) currently edited message. cset [field] [value]"""
         try:
             field, data = args.split(' ', 1)
         except:
@@ -119,21 +123,27 @@ class CruxShell(cmd.Cmd):
             self.__log.info('set field {} to {}'.format(field, data))
 
     def do_cshow(self, _):
+        """Show the currently edited message"""
         self.message_show(self.current_msg)
 
     def do_creset(self, _):
+        """Reset the current message"""
         self.current_msg = Message()
 
     def do_lshow(self, _):
+        """Show the last received message"""
         self.message_show(self.last_msg)
 
     def do_lreset(self, _):
+        """Reset the last received message"""
         self.last_msg = None
 
     def do_echo(self, txt):
+        """Echo some text"""
         print('[{}]: {}'.format(colored('echo ', 'magenta'), txt))
 
     def do_send(self, _):
+        """Send the currently edited message to the connected server"""
         if self.__addr is None:
             self.__log.error('not connected!')
             return
@@ -147,6 +157,7 @@ class CruxShell(cmd.Cmd):
             self.__log('sending...')
 
     def do_assert(self, args):
+        """Make an assertion that the args are equal. assert [field] [value]"""
         try:
             field, data = args.split(' ', 1)
             data = json.loads(data)
