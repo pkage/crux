@@ -2,29 +2,24 @@
 # Launch information for crux
 # @author Patrick Kage
 
-import argparse
+import click
 from . import daemon
 
 # entry point for console script
-def main():
-    ap = argparse.ArgumentParser(description='crux daemon launch agent')
-
-    ap.add_argument('-b', '--bind-addr', default='tcp://*:30020',
-                    help='URI for the daemon to bind the API against')
-    ap.add_argument('-p', '--pub-addr', default='tcp://*:30021',
-                    help='URI for the daemon to bind the notification server against')
-
-    ap.add_argument('--debug', help='enable debug mode', action='store_true')
-    ap.add_argument('--logging', help='enable logging', action='store_true')
-
-    args = ap.parse_args()
+@click.command()
+@click.option('--debug', default=False, help='Enable debug mode', is_flag=True)
+@click.option('--logging/--silent', default=True, help='Enable/disable logging')
+@click.option('--bind-addr', metavar='URI', default='tcp://*:30020', help='Bind URI for the daemon')
+@click.option('--pub-addr', metavar='URI', default='tcp://*:30021', help='Pub URI for the daemon vent')
+def main(debug, logging, bind_addr, pub_addr):
+    """Launcher for the crux daemon"""
 
     # initialize the daemon
     cruxd = daemon.Daemon(
-        logging=args.logging,
-        debug=args.debug,
-        bind_addr=args.bind_addr,
-        pub_addr=args.pub_addr
+        logging=logging,
+        debug=debug,
+        bind_addr=bind_addr,
+        pub_addr=pub_addr
     )
 
     # launch the daemon

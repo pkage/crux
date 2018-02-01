@@ -7,8 +7,22 @@ setup(name='crux',
       description='flexible data pipeline',
       author='Patrick Kage',
       author_email='pkage@mit.edu',
-      packages=['crux', 'crux.client', 'crux.backend', 'crux.common', 'crux.pipeline'],
-      install_requires=['pyzmq', 'msgpack-python', 'jsonschema', 'termcolor', 'semver'],
+      packages=[
+          'crux',
+          'crux.client',
+          'crux.backend',
+          'crux.common',
+          'crux.pipeline',
+          'crux.wizards'
+      ],
+      install_requires=[
+          'pyzmq',
+          'msgpack-python',
+          'jsonschema',
+          'termcolor',
+          'semver',
+          'click'
+      ],
       entry_points={
           'console_scripts': [
             'crux_daemon=crux.backend.launch:main'

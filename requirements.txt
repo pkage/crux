@@ -4,3 +4,4 @@ jsonschema
 semver
 
 termcolor
+click
