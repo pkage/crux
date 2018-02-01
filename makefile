@@ -7,7 +7,7 @@ run_concept:
 	cd examples/client/ && CRUX_BIND="tcp://*:30020" python simulation.py
 
 run_commander:
-	harnesses/cmddispatch.py harnesses/testscript.txt
+	crux repl --script harnesses/testscript.txt
 
 run_pipeline: 
 	harnesses/launchpipeline.py harnesses/testpipeline.json

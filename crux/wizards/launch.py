@@ -6,6 +6,7 @@ import sys
 import click
 
 from . import initializer
+from . import repl
 
 @click.group()
 def launch():
@@ -23,3 +24,10 @@ def init(path, name, author):
         name,
         path
     ))
+
+@launch.command('repl')
+@click.option('--script', help='script to execute', metavar='file')
+def start_repl(script):
+    """A low-level debugging REPL"""
+    repl.start(script)
+
