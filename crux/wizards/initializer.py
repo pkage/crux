@@ -117,7 +117,7 @@ paramfile = {
 
 def create(name, path=None, author=None):
     if path is None:
-        path = os.getcwd()
+        path = path.join(os.getcwd(), name)
     elif not os.path.exists(path):
         try:
             os.makedirs(path)
