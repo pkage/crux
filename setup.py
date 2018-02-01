@@ -25,7 +25,8 @@ setup(name='crux',
       ],
       entry_points={
           'console_scripts': [
-            'crux_daemon=crux.backend.launch:main'
+            'crux_daemon=crux.backend.launch:main',
+            'crux=crux.wizards.launch:launch'
           ]
       }
      )
