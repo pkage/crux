@@ -59,3 +59,8 @@ class DaemonAPI:
         return self.__call(Message(
             name='process_list'
         ))
+
+    def shutdown(self):
+        return self.__call(Message(
+            name='daemon_shutdown'
+        ))

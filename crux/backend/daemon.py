@@ -17,6 +17,7 @@ class Daemon:
     # housekeeping
     __debug = False
     __log = None
+    __should_stop = False
 
     # addresses
     __apisock_addr = None
@@ -58,7 +59,8 @@ class Daemon:
     def listen(self):
         self.__log.info('daemon listening on {}'.format(self.__apisock_addr))
 
-        while True:
+        # loop until we stop
+        while not self.__should_stop:
             message = Message(data=self.__apisock.recv())
             try:
                 reply = self.__route(message)
@@ -67,6 +69,8 @@ class Daemon:
                 if self.__debug:
                     self.__log.error(e)
             self.__apisock.send(reply.pack())
+        self.__log.warning('stopping daemon!')
+        self.__pool.terminate_all()
 
     def __route(self, msg):
         if msg.name == 'process_start':
@@ -75,6 +79,8 @@ class Daemon:
             return self.__process_list(msg)
         elif msg.name == 'process_killall':
             return self.__process_killall(msg)
+        elif msg.name == 'daemon_shutdown':
+            return self.__shutdown()
 
         return Message(name='nyi', success=False)
 
@@ -95,4 +101,8 @@ class Daemon:
 
     def __process_killall(self, msg):
         self.__pool.terminate_all()
+        return Message(name='return')
+
+    def __shutdown(self):
+        self.__should_stop = True
         return Message(name='return')
