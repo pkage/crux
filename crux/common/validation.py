@@ -12,8 +12,37 @@ def version_check(candidate, constraint):
 
     :param candidate: the candidate to drop in
     :param constraint: version constraint
+    :returns: True if passed
     """
     return semver.match(candidate, constraint)
+
+def validate_csv(csv, expected, casesensitive=True):
+    """Validate that the CSV has the same headers as the schema
+
+    :param csv: the csv object (with at least one row)
+    :param expected: the expected schema
+    :param casesensitive: whether to be case-sensitive (default True)
+    :returns: True if passed
+    """
+    # get the first row out of the csv
+    firstrow = csv[0]
+
+    # check that the first row is the length of the expected header
+    if len(firstrow) != len(expected):
+        return False
+
+    # check each item individually
+    for item, head in zip(firstrow, header):
+        if casesensitive:
+            if item != head:
+                return False
+        else:
+            if item.lower() != head.lower():
+                return False
+
+    # must have passed
+    return True
+
 
 def validate_schema(schema_file, instance):
     """
