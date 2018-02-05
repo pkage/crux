@@ -52,7 +52,7 @@ class DaemonAPI:
 
     def process_killall(self):
         return self.__call(Message(
-            name='process_list'
+            name='process_killall'
         ))
 
     def process_list(self):

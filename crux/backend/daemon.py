@@ -69,7 +69,7 @@ class Daemon:
                 if self.__debug:
                     self.__log.error(e)
             self.__apisock.send(reply.pack())
-        self.__log.warning('stopping daemon!')
+        self.__log.warn('stopping daemon!')
         self.__pool.terminate_all()
 
     def __route(self, msg):
@@ -100,6 +100,7 @@ class Daemon:
         return Message(name='return', payload=self.__pool.get_all_addrs())
 
     def __process_killall(self, msg):
+        self.__log.info('killing all managed processes...')
         self.__pool.terminate_all()
         return Message(name='return')
 
