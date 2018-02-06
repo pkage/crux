@@ -10,6 +10,7 @@ from crux.backend.daemon_api import DaemonAPI
 
 from . import initializer
 from . import repl
+from . import pipeline
 
 @click.group()
 def launch():
@@ -27,6 +28,23 @@ def init(path, name, author):
         name,
         path
     ))
+
+
+@launch.command('pipeline')
+@click.argument('description_file')
+@click.option('--daemon-addr', default='tcp://127.0.0.1:30020', metavar='uri', help='daemon to use')
+@click.option('--no-daemon', default=False, help='load processes manually', is_flag=True)
+def run_pipeline(description_file, daemon_addr, no_daemon):
+    print('{}, da: {}, nd: {}'.format(
+        description_file,
+        daemon_addr,
+        no_daemon
+    ))
+    if no_daemon:
+        pipeline.run_pipeline(description_file)
+    else:
+        pipeline.run_pipeline(description_file, daemon_addr=daemon_addr)
+
 
 @launch.command('repl')
 @click.option('--script', help='script to execute', metavar='file')
