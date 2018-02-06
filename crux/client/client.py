@@ -50,15 +50,14 @@ class CruxClient:
         with open(description, 'r') as cfile:
             self.cruxfile = json.load(cfile)
 
-            with open(self.cruxfile['inputs'], 'r') as ifile:
-                self.inputs = json.load(ifile)
-                self.cruxfile['inputs'] = self.inputs
-            with open(self.cruxfile['outputs'], 'r') as ofile:
-                self.outputs = json.load(ofile)
-                self.cruxfile['outputs'] = self.outputs
-            with open(self.cruxfile['parameters'], 'r') as pfile:
-                self.parameters = json.load(pfile)
-                self.cruxfile['parameters'] = self.parameters
+            self.inputs = self.__open_all(self.cruxfile['inputs'])
+            self.cruxfile['inputs'] = self.inputs
+
+            self.outputs = self.__open_all(self.cruxfile['outputs'])
+            self.cruxfile['outputs'] = self.outputs
+
+            self.parameters = self.__open_all(self.cruxfile['parameters'])
+            self.cruxfile['parameters'] = self.parameters
 
         # change the log name
         self.__log.set_name(self.cruxfile['name'])
@@ -179,4 +178,34 @@ class CruxClient:
                 parameters[param] = self.cruxfile['parameters'][param]['default']
 
         return parameters
+
+    def __combine(self, objs):
+        """Combine a number of objects, ordered from least to most important
+
+        :param objs: an array of objects
+        """
+        final = {}
+        for obj in objs:
+            for key in obj:
+                final[key] = obj[key]
+
+        return final
+
+    def __open_all(self, filearr):
+        """Open all files specified
+
+        combining according to CruxClient#__combine()
+
+        :param filearr: Array of files (or single file as str)
+        :returns: a combined object
+        """
+        if type(filearr) is str:
+            filearr = [filearr]
+
+        pool = []
+        for f in filearr:
+            with open(f, 'r') as fp:
+                pool.append(json.load(fp))
+
+        return self.__combine(pool)
 
