@@ -21,7 +21,8 @@ setup(name='crux',
           'jsonschema',
           'termcolor',
           'semver',
-          'click'
+          'click',
+          'progressbar2'
       ],
       entry_points={
           'console_scripts': [
