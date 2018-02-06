@@ -39,5 +39,9 @@ try:
 except BrokenPipelineError as bpe:
     log.error('pipeline broke! {}'.format(bpe.msg))
 
+# clean up pool
+log.info('cleaning up pool...')
+pp.terminate_all()
+
 # done!
 log.info('exec done!')
