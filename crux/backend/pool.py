@@ -63,7 +63,7 @@ class ProcessPool:
         :returns: a bindable zmq uri (as a string)
         """
         if self.use_ipc:
-            return os.path.join(self.ipc_dir, str(uuid.uuid4()))
+            return 'ipc://{}'.format(os.path.join(self.ipc_dir, str(uuid.uuid4())))
         else:
             # this is gross, but should work? there isn't a great way of trying to find a free port
             return 'tcp://*:{}'.format(random.randrange(50000, 65535))
