@@ -6,6 +6,7 @@ import os
 import json
 import zmq
 import msgpack
+from crux.common import packing
 from crux.common.exception import CruxException
 from crux.common.messaging import Message, MessageException
 from crux.common.logging import Logger
@@ -102,7 +103,11 @@ class CruxClient:
                     # this is an execution, pass control back to the main loop (but needing closure)
                     self.__log('passing execution back...')
                     self.__dirty_socket = True
-                    return (msg.payload['inputs'], self.__defaultify(msg.payload['parameters']), False)
+                    return (
+                        packing.unpack_io_object(msg.payload['inputs'], defs=self.cruxfile['inputs']),
+                        self.__defaultify(msg.payload['parameters']),
+                        False
+                    )
                 else:
                     reply.name ='malformed'
                     reply.success = False
@@ -140,7 +145,7 @@ class CruxClient:
         )
 
         # pack & send off
-        self.__socket.send(reply.pack())
+        self.__socket.send(reply.pack(defs=self.cruxfile['outputs']))
         self.__dirty_socket = False
         self.__log('returned output')
 

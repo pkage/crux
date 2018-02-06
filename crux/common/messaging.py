@@ -26,10 +26,11 @@ class Message:
         elif data is not None:
             self.unpack(data)
 
-    def unpack(self, data):
+    def unpack(self, data, defs=None):
         """Unpack some data into this object
 
         :param data: some msgpack-able data
+        :param defs: If not none, unpack this obj efficiently according to the definitions
         """
         try:
             data = packing.unpack_object(data)
@@ -37,12 +38,19 @@ class Message:
             raise MessageException('Failed to unpack message!')
 
         self.name = data['name']
-        self.payload = data['payload'] if 'payload' in data else None
         self.success = data['success'] if 'success' in data else True
+        if 'payload' in data:
+            if defs is None:
+                self.payload = data['payload']
+            else:
+                self.payload = packing.unpack_io_object(data['payload'], defs)
+        else:
+            self.payload = None
 
-    def pack(self):
+    def pack(self, defs=None):
         """Pack this object
 
+        :param defs: If not none, pack this obj efficiently according to the definitions
         :returns: a binary string containing this message
         """
         if self.name is None:
@@ -51,7 +59,10 @@ class Message:
 
         out = {'name': self.name}
         if self.payload is not None:
-            out['payload'] = self.payload
+            if defs is None:
+                out['payload'] = self.payload
+            else:
+                out['payload'] = packing.pack_io_object(self.payload, defs)
         if self.success is not None:
             out['success'] = self.success
 
