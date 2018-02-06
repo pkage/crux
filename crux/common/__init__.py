@@ -3,3 +3,4 @@ from . import validation
 from . import logging
 from . import messaging
 from . import exception
+from . import manipulation
