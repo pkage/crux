@@ -36,6 +36,18 @@ class DaemonAPI:
         self.__socket = self.__context.socket(zmq.REQ)
         self.__socket.connect(self.__daemon_addr)
 
+    def disconnect(self):
+        """Disconnect from the daemon"""
+        self.__socket.disconnect()
+
+    def connect(self, daemon_addr):
+        """Connect from the daemon
+
+        :param daemon_addr: Address to connect to
+        """
+        self.__daemon_addr = daemon_addr
+        self.__socket.connect(self.__daemon_addr)
+
     def __call(self, msg):
         """Perform remote call
 
