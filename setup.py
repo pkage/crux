@@ -13,7 +13,8 @@ setup(name='crux',
           'crux.backend',
           'crux.common',
           'crux.pipeline',
-          'crux.wizards'
+          'crux.wizards',
+          'crux.wizards.web'
       ],
       install_requires=[
           'pyzmq',
@@ -22,12 +23,19 @@ setup(name='crux',
           'termcolor',
           'semver',
           'click',
-          'progressbar2'
+          'progressbar2',
+          'aiohttp',
+          'aiodns',
+          'cchardet'
       ],
       entry_points={
           'console_scripts': [
             'crux_daemon=crux.backend.launch:main',
             'crux=crux.wizards.launch:launch'
           ]
-      }
+      },
+      package_data={
+          'crux.wizards.web': ['static/*']
+      },
+      include_package_data=True
      )

@@ -12,5 +12,11 @@ run_commander:
 run_pipeline: 
 	harnesses/launchpipeline.py harnesses/testpipeline.json
 
+run_web: quick_build
+	crux web
+
 build:
 	pip install . --verbose --upgrade
+
+quick_build:
+	pip install . --verbose --upgrade --no-deps

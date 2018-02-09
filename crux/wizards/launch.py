@@ -90,7 +90,8 @@ def daemon_shutdown(ctx):
 
 
 @launch.command()
-@click.option('--port', default='8080', help='port to serve on')
+@click.option('--port', default=8080, help='port to serve on')
 def web(port):
     """start the web interface"""
-    click.echo('not yet implemented!')
+    from . import web
+    web.run_app(port)
