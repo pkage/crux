@@ -10,7 +10,7 @@ run_commander:
 	crux repl --script harnesses/testscript.txt
 
 run_pipeline: 
-	harnesses/launchpipeline.py harnesses/testpipeline.json
+	crux pipeline harnesses/testpipeline.json
 
 run_web: quick_build
 	crux web
