@@ -20,3 +20,8 @@ build:
 
 quick_build:
 	pip install . --verbose --upgrade --no-deps
+
+build_web_interface:
+	cd dashboard && npm run build
+	rm -rf crux/wizards/web/static/
+	mv dashboard/build/ crux/wizards/web/static/
