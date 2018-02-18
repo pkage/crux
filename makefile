@@ -1,15 +1,15 @@
-all: build run_concept
+all: run_daemon
 
-run_daemon: build
+run_daemon: quick_build
 	crux_daemon --logging --debug
 
 run_concept:
 	cd examples/client/ && CRUX_BIND="tcp://*:30020" python simulation.py
 
-run_commander:
+run_commander: quick_build
 	crux repl --script harnesses/testscript.txt
 
-run_pipeline: 
+run_pipeline: quick_build
 	crux pipeline harnesses/testpipeline.json
 
 run_web: quick_build
@@ -18,8 +18,14 @@ run_web: quick_build
 build:
 	pip install . --verbose --upgrade
 
+develop:
+	python setup.py develop
+
 quick_build:
 	pip install . --verbose --upgrade --no-deps
+
+run_web_interface:
+	cd dashboard && npm run start
 
 build_web_interface:
 	cd dashboard && npm run build
