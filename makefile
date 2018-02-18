@@ -12,7 +12,7 @@ run_commander: quick_build
 run_pipeline: quick_build
 	crux pipeline harnesses/testpipeline.json
 
-run_web: quick_build
+run_web:
 	crux web
 
 build:
