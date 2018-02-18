@@ -1,6 +1,6 @@
-all: build run_concept
+all: run_daemon
 
-run_daemon: build
+run_daemon:
 	crux_daemon --logging --debug
 
 run_concept:
@@ -12,14 +12,20 @@ run_commander:
 run_pipeline: 
 	crux pipeline harnesses/testpipeline.json
 
-run_web: quick_build
+run_web:
 	crux web
 
 build:
 	pip install . --verbose --upgrade
 
+develop:
+	python setup.py develop
+
 quick_build:
 	pip install . --verbose --upgrade --no-deps
+
+run_web_interface:
+	cd dashboard && npm run start
 
 build_web_interface:
 	cd dashboard && npm run build
