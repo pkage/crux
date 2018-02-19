@@ -5,11 +5,28 @@
 
 import pkg_resources
 from aiohttp import web
+import aiohttp_cors
 from . import api
 
+@web.middleware
+async def cors_middleware(req, handler):
+    resp = await handler(req)
+    if req.method == 'GET':
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
 def run_app(port):
-    app = web.Application()
+    app = web.Application(middlewares=[cors_middleware])
+
+    # set up cors
+    cors = aiohttp_cors.setup(app, defaults={
+        '*': aiohttp_cors.ResourceOptions(
+            allow_credentials=True,
+            expose_headers='*',
+            allow_headers='*'
+        )
+    })
+
     # really quick hack: redirect '/' to '/index.html'
     async def redirect_base(req):
         return web.HTTPFound('/index.html')
@@ -18,6 +35,13 @@ def run_app(port):
     # create and attach the API server
     capi = api.CruxAPIServer()
     capi.attach_routes(app)
+
+    # configure cors on all routes.
+    for route in list(app.router.routes()):
+        try:
+            cors.add(route)
+        except RuntimeError as re:
+            pass
 
     # resolve static file path & serve
     static_files = pkg_resources.resource_filename('crux.wizards.web', 'static/')

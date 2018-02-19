@@ -35,7 +35,8 @@ setup(name='crux',
           'progressbar2',
           'aiohttp',
           'aiodns',
-          'cchardet'
+          'cchardet',
+          'aiohttp-cors'
       ],
       entry_points={
           'console_scripts': [
