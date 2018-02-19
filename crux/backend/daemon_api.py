@@ -36,9 +36,16 @@ class DaemonAPI:
         self.__socket = self.__context.socket(zmq.REQ)
         self.__socket.connect(self.__daemon_addr)
 
+    def get_addr(self):
+        """Get the currently connected daemon's address
+
+        :returns: address
+        """
+        return self.__daemon_addr
+
     def disconnect(self):
         """Disconnect from the daemon"""
-        self.__socket.disconnect()
+        self.__socket.disconnect(self.__daemon_addr)
 
     def connect(self, daemon_addr):
         """Connect from the daemon
