@@ -107,3 +107,12 @@ class Daemon:
     def __shutdown(self):
         self.__should_stop = True
         return Message(name='return')
+
+    def __enter__(self):
+        pass
+
+    def __exit__(self, e, val, tb):
+        """Flushes pool if unclean"""
+        print('')
+        self.__log.warn('uncleanly flushing pool on shutdown')
+        self.__pool.terminate_all()

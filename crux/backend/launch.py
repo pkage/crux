@@ -22,5 +22,6 @@ def main(debug, logging, bind_addr, pub_addr):
         pub_addr=pub_addr
     )
 
-    # launch the daemon
-    cruxd.listen()
+    # guarded here to make sure we flush the pool
+    with cruxd:
+        cruxd.listen()
