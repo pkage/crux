@@ -87,7 +87,22 @@ def validate_schema(schema_file, instance):
 
     return True
 
+def validate_uri(uri):
+    """Check if a URI is valid
 
+    Note that this *only* checks if the URI is malformed, it does not verify that the resource itself is valid!
+
+    :param uri: URI to check
+    :returns: True if valid
+    """
+    regex = re.compile(
+        r'^(?:tcp|udp|ipc|inproc|pgm|epgm)?://' # test for supported transports
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' # domain
+        r'localhost|' # (or localhost)
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # (or an ip)
+        r'(?::\d+)$', re.IGNORECASE) # port
+
+    return regex.match(uri)
 
 
 if __name__ == "__main__":
