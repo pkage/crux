@@ -3,6 +3,7 @@
 # @author Patrick Kage
 
 import os
+import re
 import semver
 from jsonschema import validate, RefResolver
 from jsonschema.exceptions import ValidationError as ve
