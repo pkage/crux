@@ -12,17 +12,20 @@ run_commander: quick_build
 run_pipeline: quick_build
 	crux pipeline harnesses/testpipeline.json
 
-run_web:
+run_web: quick_build
 	crux web
 
 build:
-	pip install . --verbose --upgrade
+	pip install . --verbose --upgrade --retries 0
+
+build-webdebug:
+	pip install .[webdebug] --verbose --upgrade
 
 develop:
 	python setup.py develop
 
 quick_build:
-	pip install . --verbose --upgrade --no-deps
+	pip install . --verbose --upgrade --no-deps --retries 0
 
 run_web_interface:
 	cd dashboard && npm run start

@@ -1,0 +1,21 @@
+upcoming feature requirements 
+(* denotes important)
+
+--- DONE ---
+repo creation wizard
+support multiple I/O
+*multiple file options for inp/out/params
+*csv remapping
+*move pipeline execution to cli
+progress bars
+
+--- RELEASE 0.0.1 ---
+pipeline creator cli
+web pipeline display
+
+--- RELEASE 0.0.2 ---
+input validation
+logging passthrough
+multiple daemon pipeline
+clone & version components
+convert client api to with/yield/generator

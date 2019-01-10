@@ -1,0 +1,25 @@
+{
+	"components": {
+		"fileloader": {
+			"src": "examples/fileloader",
+			"version": "^0.0.1"
+		},
+		"datamunger": {
+			"src": "tcp://127.0.0.1:58255",
+			"version": "^0.0.1"
+		}
+	},
+
+	"pipeline": [
+		{
+			"component": "fileloader",
+			"parameters": {
+				"path": "test.txt",
+				"export": "text"
+			},
+			"outmap": {
+				"text": "content"
+			}
+		}
+	]
+}

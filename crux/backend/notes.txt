@@ -1,0 +1,33 @@
+--- NEW ---
+
+daemon methods:
+
+list process pool (process_list)
+start process (process_start)
+quit all processes (process_killall)
+
+execute pipeline
+
+--- OLD ---
+
+daemon methods:
+
+list pipelines
+create pipeline
+delete pipeline
+flush pipeline pool
+add component
+refresh component
+list components
+
+pipeline methods:
+
+add component
+reorder component
+remove component
+configure component parameters
+get current pipeline status
+save pipeline configuration
+load pipeline configuration
+execute
+dump cache

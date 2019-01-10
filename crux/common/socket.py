@@ -39,6 +39,7 @@ class ManagedSocket:
         """
         self.__address = addr
         self.__socket.connect(addr)
+        print('socket is connected to {}'.format(addr))
 
     def disconnect(self):
         """Disconnect from the address"""
@@ -58,9 +59,10 @@ class ManagedSocket:
 
         :param timeout: timeout in milliseconds
         :raises RequestTimeoutException: on timeout
+        :returns: Message
         """
         if timeout is None:
-            return self.__socket.recv()
+            return Message(data=self.__socket.recv())
         else:
             # timeouts get a little hairy, but what we're gonna do is:
             # 1) register socket with a poller
@@ -84,7 +86,7 @@ class ManagedSocket:
                 poll.unregister(self.__socket)
 
                 # create a new socket to replace the old one
-                self.__socket = self.__context.socket(zmq.REQ)
+                self.__socket = self.__context.socket(self.__socktype)
                 self.__socket.connect(self.__address)
 
                 raise RequestTimeoutException('request to {} timed out'.format(address))
@@ -96,7 +98,5 @@ class ManagedSocket:
         :param timeout: in milliseconds
         :raises RequestTimeoutException: on timeout
         """
-        self.__socket.send(message.pack())
-        return Message(
-            data=self.__socket.recv(timeout=timeout)
-        )
+        self.send(message.pack())
+        return self.recv(timeout=timeout)

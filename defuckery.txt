@@ -1,0 +1,20 @@
+Pipeline editor data flow is getting complicated.
+
+Pipeline editor needs to:
+
+
+data pipeline:
+	add from candidates
+	reorder pipeline
+	change at index
+
+dependencies:
+	list potential candidates*
+	add candidate*
+	add custom candidate*
+	remove candidate*
+
+general:
+	serialize
+	deserialize
+

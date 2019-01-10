@@ -10,6 +10,26 @@ __Date:__ 2018-01-16
 
 `crux` is designed to provide a simple but powerful pipeline framework for spacecraft/aero simulations.
 
+## Installation
+
+<!---You will need a copy of libgit2 installed on your system for pygit2 to work. Check your system's package manager for distributions, although it should just be `libgit2` ([brew](http://formulae.brew.sh/formula/libgit2), [apt](https://packages.ubuntu.com/xenial/libgit2-24), [pacman](https://www.archlinux.org/packages/extra/x86_64/libgit2/), [source](https://github.com/libgit2/libgit2)).-->
+
+You should have the `git` binaries somewhere on your `$PATH`, and then you can do:
+
+```
+$ make build
+```
+
+to build the command line tooling, and that should expose the `crux` and `crux_daemon` command line tools.
+
+## Quickstart
+
+```
+$ make build
+$ crux_daemon &
+$ crux web
+```
+
 ## Documentation
 
 ### Structure

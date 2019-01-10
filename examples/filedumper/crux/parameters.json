@@ -1,6 +1,6 @@
 {
 	"path": {
-		"name": "Path of the file to load",
+		"name": "Path of the file to save to",
 		"type": "text",
 		"default": "/tmp/out.txt"
 	}

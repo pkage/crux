@@ -1,5 +1,39 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+html {
+	/* ugly override */
+	overflow-y: auto;
+}
+
+.is-fluid {
+	margin-left: 32px;
+	margin-right: 32px;
+}
+
+.top-bottom-margin {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+
+.icon-button {
+	cursor: pointer;
+}
+.icon-button:not(:hover) {
+	color: black !important;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.monospace {
+	font-family: monospace;
+}
+
+.toolbar-parent:not(:hover) > .toolbar {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.toolbar {
+	opacity: 0.5;
 }

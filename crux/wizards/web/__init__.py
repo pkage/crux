@@ -47,6 +47,13 @@ def run_app(port):
     static_files = pkg_resources.resource_filename('crux.wizards.web', 'static/')
     app.router.add_static('/', static_files)
 
+    # if we've installed the webdebug extra, attach the debugger
+    try:
+        import aiohttp_debugtoolbar
+        aiohttp_debugtoolbar.setup(app)
+    except:
+        raise
+
     # launch the app
     web.run_app(app, port=port)
 

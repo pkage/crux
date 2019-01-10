@@ -36,8 +36,14 @@ setup(name='crux',
           'aiohttp',
           'aiodns',
           'cchardet',
-          'aiohttp-cors'
+          'aiohttp-cors==0.6.0',
+          'gitpython'
       ],
+      extra_requires={
+          'webdebug': [
+            'aiohttp_debugtoolbar'
+          ]
+      },
       entry_points={
           'console_scripts': [
             'crux_daemon=crux.backend.launch:main',

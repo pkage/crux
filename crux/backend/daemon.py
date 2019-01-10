@@ -26,7 +26,7 @@ class Daemon:
     # process pool
     __processes = None
 
-    def __init__(self, logging=True, debug=False, bind_addr='tcp://*:30020', pub_addr='tcp://*:30021', context=None):
+    def __init__(self, logging=True, debug=False, bind_addr='tcp://*:30020', pub_addr='tcp://*:30021', context=None, install_loc=None):
         # logging!
         self.__log = Logger(logging=logging, name='daemon')
 
@@ -116,3 +116,4 @@ class Daemon:
         print('')
         self.__log.warn('uncleanly flushing pool on shutdown')
         self.__pool.terminate_all()
+

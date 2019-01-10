@@ -1,7 +1,12 @@
 pyzmq
 msgpack-python
 jsonschema
-semver
-
 termcolor
+semver
 click
+progressbar2
+aiohttp
+aiodns
+cchardet
+aiohttp-cors
+pygit2

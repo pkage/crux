@@ -3,6 +3,7 @@
 # @author Patrick Kage
 
 import zmq
+from crux.common.socket import ManagedSocket
 from crux.common.logging import Logger
 from crux.common.messaging import Message
 
@@ -11,11 +12,12 @@ class DaemonAPI:
     __socket = None
     __context = None
     __daemon_addr = None
+    __timeout = None
 
     # logger
     __log = None
 
-    def __init__(self, daemon_addr, context=None):
+    def __init__(self, daemon_addr, context=None, timeout=None):
         """Initialize the daemon api pointing at a remote API
 
         :param daemon_addr: the daemon to connect to
@@ -32,8 +34,9 @@ class DaemonAPI:
             self.__context = context
 
         # create socket and connect
+        self.__timeout = timeout
         self.__daemon_addr = daemon_addr
-        self.__socket = self.__context.socket(zmq.REQ)
+        self.__socket = ManagedSocket(self.__context, zmq.REQ)
         self.__socket.connect(self.__daemon_addr)
 
     def get_addr(self):
@@ -45,7 +48,7 @@ class DaemonAPI:
 
     def disconnect(self):
         """Disconnect from the daemon"""
-        self.__socket.disconnect(self.__daemon_addr)
+        self.__socket.disconnect()
 
     def connect(self, daemon_addr):
         """Connect from the daemon
@@ -60,8 +63,7 @@ class DaemonAPI:
 
         :param msg: message to send
         """
-        self.__socket.send(msg.pack())
-        return Message(data=self.__socket.recv())
+        return self.__socket.call(msg, timeout=self.__timeout)
 
     def process_start(self, path):
         return self.__call(Message(
